@@ -1,11 +1,16 @@
+using System.Buffers;
+
 namespace Algorithms.Levenshtein_distance; 
 
 public class Levenshtein {
-    public static decimal Distance(string from,
-                               string to,
-                               decimal substitutionCost = 1,
-                               decimal deletionCost = 0.5m,
-                               decimal insertionCost = 0.5m) {
+    public static decimal Distance(string from, string to, decimal substitutionCost = 1, decimal deletionCost = 0.5m, decimal insertionCost = 0.5m) => 
+        Distance(from.AsSpan(), to.AsSpan(), substitutionCost, deletionCost, insertionCost);
+
+    public static decimal Distance<T>(ReadOnlySpan<T> from,
+                                   ReadOnlySpan<T> to,
+                                   decimal substitutionCost = 1,
+                                   decimal deletionCost = 0.5m,
+                                   decimal insertionCost = 0.5m) where T : IEquatable<T> {
         var m = new Decimal[to.Length+1, from.Length+1];
 
         // init the top and left of the matrix
@@ -17,7 +22,7 @@ public class Levenshtein {
 
         for (int i = 1; i < m.GetLength(0); i++) {
             for (int j = 1; j < m.GetLength(1); j++) {
-                if (from[j-1] == to[i-1]) {
+                if (from[j-1].Equals(to[i-1])) {
                     m[i,j] = m[i-1, j-1]; //get the cost of the last operation
                     continue;
                 }
