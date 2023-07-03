@@ -100,7 +100,7 @@ public class Levenshtein {
     
     // Memoized recursive Solution
     // Memo needs to have a global variable, so it is not able to be static like the other impls
-    private decimal[,] _memo;
+    private decimal[,]? _memo;
     public decimal DistanceRecursive<T>(ReadOnlySpan<T> from,
                                         ReadOnlySpan<T> to,
                                         decimal substitutionCost = 1,
@@ -130,7 +130,7 @@ public class Levenshtein {
         if (to.Length == 0)
             return from.Length * deletionCost;
 
-        if (_memo[_memo.GetLength(0) - from.Length, _memo.GetLength(1) - to.Length] > -1)
+        if (_memo![_memo.GetLength(0) - from.Length, _memo.GetLength(1) - to.Length] > -1)
             return _memo[_memo.GetLength(0) - from.Length, _memo.GetLength(1) - to.Length];
 
         decimal output;

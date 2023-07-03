@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Versioning;
 using BenchmarkDotNet.Attributes;
 using Algorithms.Edit_Distance;
 
@@ -31,7 +32,7 @@ public class Levenshtein {
         Algorithms.Edit_Distance.Levenshtein.Distance<byte>(length1.AsSpan(), length2.AsSpan());
     }
     
-    [Benchmark]
+    //[Benchmark]
     public void LevenshteinDistanceRecursive() {
         var sut = new Algorithms.Edit_Distance.Levenshtein();
         sut.DistanceRecursive<byte>(length1.AsSpan(), length2.AsSpan());
